@@ -1,0 +1,56 @@
+import pyads
+from time import sleep
+import pyads
+import xlsxwriter
+import openpyxl
+from openpyxl import load_workbook
+from openpyxl import Workbook
+from openpyxl import worksheet
+
+wb = load_workbook('test_excel.xlsx')
+ws = wb.worksheets[0]
+z = int
+while True:
+    
+# add route to remote plc
+   # pyads.add_route("127.0.0.1.1.1", "192.168.74.1")
+
+# connect to plc and open connection
+    plc = pyads.Connection('127.0.0.1.1.1', 851)
+    plc.open()
+# read int value by name
+    for i in range(1,54,1):
+        sleep(0.2)
+        
+        storageData1 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].n_positionValue".format(i), pyads.PLCTYPE_INT)
+        storageData2 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].n_objectColor".format(i), pyads.PLCTYPE_INT)
+        storageData3 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].b_operationType".format(i), pyads.PLCTYPE_BOOL)
+    
+
+# write int value by name
+  #  z =  plc.write_by_name("GVL.fromPlc", i, pyads.PLCTYPE_INT)
+
+# close connection
+       
+
+    #ws['A2']= storageData1
+    #ws['A3']= storageData2
+    #ws['A4']= storageData3
+
+        d = ws.cell(row=1, column=i, value=storageData1)
+        e = ws.cell(row=2, column=i, value=storageData2)
+        f = ws.cell(row=3, column=i, value=storageData3)
+        wb.save('test_excel.xlsx')
+    
+        print(storageData1,storageData2,storageData3)
+
+
+
+
+        sleep (0.1)
+        #plc.close()
+    
+    
+
+
+   
