@@ -13,31 +13,34 @@ z = int
 while True:
     
 # add route to remote plc
-   # pyads.add_route("127.0.0.1.1.1", "192.168.74.1")
+   # pyads.add_route("127.0.0.1", "192.168.74.1") # what
 
 # connect to plc and open connection
-    plc = pyads.Connection('127.0.0.1.1.1', 851)
+    plc = pyads.Connection('127.0.0.1', 851) # kører din plc lokalt eller hvad?
     plc.open()
 # read int value by name
     for i in range(1,54,1):
-        sleep(0.2)
+        sleep(0.2) # er det nødvendigt? det gør din proces pænt langsom. 
         
         storageData1 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].n_positionValue".format(i), pyads.PLCTYPE_INT)
         storageData2 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].n_objectColor".format(i), pyads.PLCTYPE_INT)
         storageData3 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].b_operationType".format(i), pyads.PLCTYPE_BOOL)
+        # og så smid data ud bagefter? du gør intet med din data og dine variable er ikke globale. fx sådan her
+        # global storagedata
+        
+        # så får du en liste med position values, og de dertilhørende object colors og operation types som objekter tilhørende hver position value.
     
 
 # write int value by name
   #  z =  plc.write_by_name("GVL.fromPlc", i, pyads.PLCTYPE_INT)
 
 # close connection
-       
 
     #ws['A2']= storageData1
     #ws['A3']= storageData2
     #ws['A4']= storageData3
 
-        d = ws.cell(row=1, column=i, value=storageData1)
+        d = ws.cell(row=1, column=i, value=storageData1) # disse linjer giver ingen mening for mig. du laver tre variable: d, e, f. Så gemmer du et excel ark. hvad med din data???
         e = ws.cell(row=2, column=i, value=storageData2)
         f = ws.cell(row=3, column=i, value=storageData3)
         wb.save('test_excel.xlsx')
@@ -46,9 +49,8 @@ while True:
 
 
 
-
-        sleep (0.1)
-        #plc.close()
+        sleep(0.1)
+        #plc.close() # hvorfor skal du lukke din plc forbindelse? skal koden ikke køre igen nu?
     
     
 
