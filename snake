@@ -1,0 +1,77 @@
+import pyads
+from time import sleep
+import pyads
+import xlsxwriter
+import openpyxl
+from openpyxl import load_workbook
+from openpyxl import Workbook
+from openpyxl import worksheet
+from datetime import date
+from datetime import datetime
+
+td = date.today()
+now = datetime.now()
+current_time = now.strftime("%H:%M:%S")
+#o = current_time
+
+
+gemmestring = ("Storagesheet{}{}.xlsx".format(td,current_time))
+# Create a excel document and adds a worksheet.
+workbook = xlsxwriter.Workbook(gemmestring)
+worksheet = workbook.add_worksheet()
+workbook.close()
+# loads current document
+wb = load_workbook(gemmestring)
+ws = wb.worksheets[0]
+
+# variables
+storageData1 = int
+storageData2 = str
+storageData3 = str
+storageData4 = str
+i = int
+d = int
+e = str
+f = str
+k = int
+g = str 
+
+# Primary function 
+def somefunc(entry1,entry2, entry3,entry4):
+    global storageData1,storageData2,storageData3,storageData4, i, d, e , f, wb ,ws, k, g 
+    
+    for i in range(1,54,1): 
+        # Takes data from PLC
+        entry1 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].n_positionValue".format(i), pyads.PLCTYPE_INT)
+        entry2 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].s_timeStamp".format(i), pyads.PLCTYPE_STRING)
+        entry3 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].s_Color".format(i), pyads.PLCTYPE_STRING)
+        entry4 = plc.read_by_name("GVL_dataHMI.a_storageData[{}].s_operationType".format(i), pyads.PLCTYPE_STRING)
+
+        # writes plc data to excel 
+        d = ws.cell(row=i, column=k, value=entry1)
+        e = ws.cell(row=i, column=k+1, value=entry2)
+        f = ws.cell(row=i, column=k+2, value=entry3)
+        g = ws.cell(row=i, column=k+3, value=entry4)
+        wb.save('testtest.xlsx')
+        sleep(0.1)
+        print(gemmestring)
+    
+       
+
+
+
+# main loop
+if __name__ == '__main__':
+    # opens connection to PLC
+    plc = pyads.Connection('127.0.0.1.1.1', 851)
+    plc.open()
+    # Variable for selection columns in excel
+    k = 1
+    while True:
+        somefunc(storageData1,storageData2,storageData3,storageData4)
+        k = k + 3
+
+    
+
+
+   
