@@ -4,7 +4,7 @@ from imbox import Imbox # pip install imbox
 import traceback
 host = "imap.gmail.com"
 username = "NH.plant.data@gmail.com"
-password = 'nh123456'
+password = ''
 download_folder = r"C:\Users\Thor\Desktop\Email"
 
 lines = []
