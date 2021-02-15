@@ -1,3 +1,20 @@
+import shutil, os
+from datetime import datetime, date
+import glob
+import pandas as pd
+import openpyxl
+Counter= 0 
+Filelist=[]
+testlist=[]
+td = date.today()
+now = datetime.now()
+current_time = now.strftime("%H.%M .%S")
+
+Source = r"C:\Users\Thor\Desktop\Logs"
+Destination =(r"C:\Users\Thor\Desktop\Copylocation_test{}{}").format(Counter,".csv")
+writer = pd.ExcelWriter(r"C:\Users\Thor\Desktop\NH\Test_file.xlsx")
+
+
 
 def mover():
     path = Source+'\*.csv'
@@ -30,3 +47,7 @@ if __name__=='__main__':
     writer.save()
 
    
+
+    
+    
+        
