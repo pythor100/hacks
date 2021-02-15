@@ -1,0 +1,32 @@
+
+def mover():
+    path = Source+'\*.csv'
+    for f in glob.glob(path):
+        Filelist.append(f)
+    
+        
+    #for f in Filelist:
+     #   shutil.copy(f, dst= Destination)
+    
+
+def csv_to_excel():
+    global Counter
+    i = 0
+    for x in Filelist:
+        i +=1
+        df =pd.read_csv(Filelist[Counter],engine='python',usecols=range(0,7))
+        df.to_excel(writer, "sheet "+str(i))    
+        Counter += 1
+    
+
+
+
+
+
+
+if __name__=='__main__':
+    mover()
+    csv_to_excel()
+    writer.save()
+
+   
